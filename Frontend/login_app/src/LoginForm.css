@@ -8,3 +8,8 @@
   background-color:lightgray;
   padding: 2em;
 }
+.error-text {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}

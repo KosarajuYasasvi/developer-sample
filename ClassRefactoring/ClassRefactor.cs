@@ -22,6 +22,14 @@ namespace DeveloperSample.ClassRefactoring
         public SwallowType Type { get; }
         public SwallowLoad Load { get; private set; }
 
+        private static readonly Dictionary<(SwallowType, SwallowLoad), double> AirspeedVelocitiesInfo = new Dictionary<(SwallowType, SwallowLoad), double>
+        {
+            {(SwallowType.African,SwallowLoad.None),22 },
+            {(SwallowType.African,SwallowLoad.Coconut),18 },
+            {(SwallowType.European,SwallowLoad.None),20 },
+            {(SwallowType.European,SwallowLoad.Coconut),16 },
+        };
+
         public Swallow(SwallowType swallowType)
         {
             Type = swallowType;
@@ -34,23 +42,19 @@ namespace DeveloperSample.ClassRefactoring
 
         public double GetAirspeedVelocity()
         {
-            if (Type == SwallowType.African && Load == SwallowLoad.None)
+            double airspeedVelocity = 0;
+            try
             {
-                return 22;
+                if (AirspeedVelocitiesInfo.TryGetValue((Type, Load), out double airspeed))
+                {
+                    airspeedVelocity = airspeed;
+                }
             }
-            if (Type == SwallowType.African && Load == SwallowLoad.Coconut)
+            catch (Exception)
             {
-                return 18;
+                airspeedVelocity = -1;
             }
-            if (Type == SwallowType.European && Load == SwallowLoad.None)
-            {
-                return 20;
-            }
-            if (Type == SwallowType.European && Load == SwallowLoad.Coconut)
-            {
-                return 16;
-            }
-            throw new InvalidOperationException();
+            return airspeedVelocity;
         }
     }
 }

@@ -8,8 +8,15 @@ const App = () => {
 
   return (
     <div className="App">
-      <LoginForm onSubmit={({ login, password }) => console.log({ login, password })} />
-      <LoginAttemptList attempts={loginAttempts} />
+          <LoginForm
+              onSubmit={({ login, password }) =>
+                  setLoginAttempts([
+                      ...loginAttempts,
+                      { username: login, password: password },
+                  ])
+              }
+          />
+          <LoginAttemptList attempts={loginAttempts} />
     </div>
   );
 };
